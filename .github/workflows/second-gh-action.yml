@@ -25,7 +25,7 @@ jobs:
       - name: install python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: graalpy
 
       - name: Install poetry
         uses: abatilo/actions-poetry@v3
@@ -54,3 +54,7 @@ jobs:
         run: |
           echo time to bid adieu
           echo "$(date) - time up...".
+  deploy:
+    runs-on: macos-latest
+    steps:
+      - uses:
