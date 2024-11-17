@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: install python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.13'
 
@@ -52,5 +52,5 @@ jobs:
       # Runs good by print
       - name: Run a multi-line script
         run: |
-          echo time to bid adeiu
+          echo time to bid adieu
           echo "$(date) - time up...".
