@@ -15,7 +15,7 @@ on: # Triggers the workflow on push or pull request events but only for the "mai
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test:
+  test-lint:
     runs-on: macos-latest
 
     steps: # Runs a single command using the runners shell
@@ -40,6 +40,10 @@ jobs:
         with:
           path: ./.venv
           key: venv-${{ hashFiles('poetry.lock') }}
+
+      - name: Analysing the code with pylint
+        run: |
+          pylint $(git ls-files '*.py')
 
       - name: Install the project dependencies
         run: poetry install
