@@ -54,7 +54,21 @@ jobs:
         run: |
           echo time to bid adieu
           echo "$(date) - time up...".
+
+      - name: Upload workspace folder artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-${GITHUB_RUN_ID}
+          path: $GITHUB_WORKSPACE
   deploy:
     runs-on: macos-latest
     steps:
-      - uses:
+      - name: Download folder artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-${GITHUB_RUN_ID}
+          path: .
+      - name: Print the folder
+        run: |
+          echo "Previous job's folder: $GITHUB_WORKSPACE"
+          ls -lrta
