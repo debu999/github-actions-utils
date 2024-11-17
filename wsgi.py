@@ -1,3 +1,4 @@
+"""An entry point for a WSGI application."""
 # wsgi.py
 from github_actions_utils.calculator import app
 
