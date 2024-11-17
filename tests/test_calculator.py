@@ -117,4 +117,4 @@ async def test_custom_input():
   result = await schema.execute(query)
   assert result.data["add"] == 7
   assert result.data["books"] == [
-    {"title": "The Great Gatsby", "author": "F. Scott Fitzgerald_old"}]
+    {"title": "The Great Gatsby", "author": "F. Scott Fitzgerald"}]
