@@ -54,4 +54,4 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo time to bid adieu
-          echo "$(date) - time up...".
+          echo "$(date) - time up..."
