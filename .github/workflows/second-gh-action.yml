@@ -73,4 +73,4 @@ jobs:
       - name: Print the folder
         run: |
           echo "Previous job's folder: $GITHUB_WORKSPACE"
-          ls -lrta
+          ls -lRta
