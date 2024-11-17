@@ -59,7 +59,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: artifact-${GITHUB_RUN_ID}
-          path: $GITHUB_WORKSPACE
+          path: ./
   deploy:
     runs-on: macos-latest
     steps:
@@ -67,7 +67,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: artifact-${GITHUB_RUN_ID}
-          path: .
+          path: ./artifact-${GITHUB_RUN_ID}
 
       - name: Print the folder
         run: |
