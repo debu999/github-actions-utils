@@ -1,0 +1,56 @@
+# This is a basic workflow to help you get started with Actions
+
+name: second-workflow
+
+# Controls when the workflow will run
+on: # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test:
+    runs-on: macos-latest
+
+    steps: # Runs a single command using the runners shell
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: install python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v3
+
+      - name: Setup a local virtual environment (if no poetry.toml file)
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+
+      - uses: actions/cache@v4
+        name: Define a cache for the virtual environment based on the dependencies lock file
+        with:
+          path: ./.venv
+          key: venv-${{ hashFiles('poetry.lock') }}
+
+      - name: Install the project dependencies
+        run: poetry install
+
+      - name: Run the automated tests (for example)
+        run: poetry run pytest -v
+      
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+
+      # Runs good by print
+      - name: Run a multi-line script
+        run: |
+          echo time to bid adeiu
+          echo "$(date) - time up...".

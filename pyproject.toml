@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "github-actions-utils"
+version = "0.1.0"
+description = "Debabrata Udemy Github Actions Utils"
+authors = ["Debabrata Patnaik <debabrata_patnaik@live.com>"]
+readme = "README.md"
+package-mode = false
+license = "Apache License Version 2.0"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+flask = "^3.1.0"
+strawberry-graphql = {extras = ["debug-server"], version = "^0.248.1"}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+pytest-asyncio = "^0.24.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
