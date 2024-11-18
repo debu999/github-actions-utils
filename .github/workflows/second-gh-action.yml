@@ -77,6 +77,9 @@ jobs:
         with:
           name: artifact-${{ github.run_id }}
           path: ./
+
+      - name: Publish job output to github output file
+        run: ls -lRta | head 1 >> $GITHUB_OUTPUT ';'
   deploy:
     runs-on: macos-latest
     needs: test-lint
