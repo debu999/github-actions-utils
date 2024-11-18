@@ -7,8 +7,8 @@ on: # Triggers the workflow on push or pull request events but only for the "mai
   push:
     branches:
       - main
-    paths-ignore:
-      - '.github/workflows/**'
+#    paths-ignore:
+#      - '.github/workflows/**'
   pull_request:
     types:
       - opened
