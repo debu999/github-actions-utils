@@ -17,6 +17,8 @@ on: # Triggers the workflow on push or pull request events but only for the "mai
       - ready_for_review
       - closed
       - assigned
+    branches:
+      - main
   # pull_request:
   #   branches: [ "main" ]
 
