@@ -30,7 +30,9 @@ on: # Triggers the workflow on push or pull request events but only for the "mai
 jobs:
   test-lint:
     runs-on: macos-latest
-
+    outputs:
+      script-file1: ${{ steps.publish.outputs.script-file1 }}
+      script-file2: ${{ steps.publish.outputs.script-file2 }}
     steps: # Runs a single command using the runners shell
       - name: checkout code
         uses: actions/checkout@v4
@@ -79,7 +81,8 @@ jobs:
           path: ./
 
       - name: Publish job output to github output file
-        run: ls -lRta | head 1 >> $GITHUB_OUTPUT ';'
+        id: publish
+        run: find github_actions_utils/*.py -type f -execdir echo '{}' ';' | awk '{print "script-file"NR"="$0}' >> $GITHUB_OUTPUT
   deploy:
     runs-on: macos-latest
     needs: test-lint
@@ -94,3 +97,7 @@ jobs:
         run: |
           echo "Previous job's folder: $GITHUB_WORKSPACE"
           ls -lRta
+      - name: Output py files
+        run: |
+          echo "${{ needs.test-lint.outputs.script-file1 }}"
+          echo "${{ needs.test-lint.outputs.script-file2 }}"
