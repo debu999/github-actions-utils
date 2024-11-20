@@ -1,8 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
 name: third-workflow
-
-
 on:
   push:
     branches:
@@ -33,8 +31,8 @@ jobs:
           echo all should have worked for us...
   env-vars2:
     runs-on: macos-latest
-    env:
-      F_SECRET: ${{ secrets.FIRST_SECRET }}
+#    env:
+#      F_SECRET: ${{ secrets.FIRST_SECRET }}
     steps:
       - name: print ENV VARS2
         run: |
@@ -50,4 +48,4 @@ jobs:
           echo "workflow job name: ${{ env.WORKFLOW_JOB_NAME }}"
           echo only first 2 will work should have worked for us...
 #          echo "env: ${{ env }}"
-          echo secret $F_SECRET
+#          echo secret $F_SECRET
