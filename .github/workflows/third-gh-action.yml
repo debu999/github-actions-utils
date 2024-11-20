@@ -44,8 +44,8 @@ jobs:
       - name: print shell
         run: |
           echo "SHELL: $SHELL"
-#          echo "workflow name: ${{ env.WORKFLOW_NAME }}"
-#          echo "workflow job name: ${{ env.WORKFLOW_JOB_NAME }}"
-#          echo only first 2 will work should have worked for us...
+          echo "workflow name: ${{ env.WORKFLOW_NAME }}"
+          echo "workflow job name: ${{ env.WORKFLOW_JOB_NAME }}"
+          echo only first 2 will work should have worked for us...
 ##          echo "env: ${{ env }}"
 #          echo secret $F_SECRET
