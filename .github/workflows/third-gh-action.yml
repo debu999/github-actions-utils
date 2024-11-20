@@ -25,3 +25,8 @@ jobs:
         shell: python
       - name: print all env variables
         run: env
+      - name: print shell
+        run: |
+          echo "SHELL: $SHELL"
+          echo "shell: ${{ env.SHELL }}"
+          echo both should have worked for us...
