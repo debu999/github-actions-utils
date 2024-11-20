@@ -30,4 +30,4 @@ jobs:
       - name: step run on failure
         if: failure() && steps.success_step.outcome == 'failure'
         run: |
-          echo {{ steps.success_step.conclusion }}
+          echo ${{ steps.success_step.conclusion }}
