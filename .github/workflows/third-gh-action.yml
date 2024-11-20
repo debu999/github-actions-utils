@@ -34,7 +34,6 @@ jobs:
           echo "workflow job name: ${{ env.WORKFLOW_JOB_NAME }}"
           echo all should have worked for us...
   env-vars2:
-    environment: dev
     runs-on: macos-latest
     env:
       DEV_SECRET: ${{ secrets.FIRST_SECRET }}
