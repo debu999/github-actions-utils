@@ -61,3 +61,48 @@ jobs:
         id: success_step
         run: |
           echo "run on steps-conditional/job-conditional-failure/job-conditional-success always"
+  test-lint:
+    runs-on: macos-latest
+    outputs:
+      script-file1: ${{ steps.publish.outputs.script-file1 }}
+      script-file2: ${{ steps.publish.outputs.script-file2 }}
+    steps: # Runs a single command using the runners shell
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: install python
+        if: steps.venv_cache.outputs.cache-hit != 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install poetry
+        if: steps.venv_cache.outputs.cache-hit != 'true'
+        uses: abatilo/actions-poetry@v3
+
+      - name: Setup a local virtual environment (if no poetry.toml file)
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+
+      - uses: actions/cache@v4
+        id: venv_cache
+        name: Define a cache for the virtual environment based on the dependencies lock file
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-poetry-venv-${{ hashFiles('poetry.lock') }}
+
+      - name: Install the project dependencies
+        if: steps.venv_cache.outputs.cache-hit != 'true'
+        run: poetry install
+
+      - name: Analysing the code with pylint
+        run: |
+          poetry run pylint $(git ls-files '*.py')
+
+      - name: Run the automated tests (for example)
+        run: poetry run pytest -v
+
+      - name: Publish job output to github output file
+        id: publish
+        run: find github_actions_utils/*.py -type f -execdir echo '{}' ';' | awk '{print "script-file"NR"="$0}' >> $GITHUB_OUTPUT
