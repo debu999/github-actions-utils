@@ -1,0 +1,22 @@
+# This is a basic workflow to help you get started with Actions
+
+name: third-workflow
+
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  WORKFLOW_NAME: ${{ github.workflow }}
+  WORKFLOW_TYPE: print job workflow
+jobs:
+  env-vars:
+    runs-on: macos-latest
+    env:
+      WORKFLOW_JOB_NAME: env-vars
+    steps:
+      - name: print ENV VARS
+        run: echo $WORKFLOW_NAME, $WORKFLOW_TYPE, $WORKFLOW_JOB_NAME
