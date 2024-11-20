@@ -115,5 +115,13 @@ jobs:
       - name: Publish job output to github output file
         id: publish
         run: find github_actions_utils/*.py -type f -execdir echo '{}' ';' | awk '{print "script-file"NR"="$0}' >> $GITHUB_OUTPUT
+
+      - name: Upload workspace folder artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-${{ github.run_id }}
+          path: ./
   reuse-workflow:
     uses: ./.github/workflows/mandatory-workflow.yml
+    with:
+      artifact-name: artifact-${{ github.run_id }}
