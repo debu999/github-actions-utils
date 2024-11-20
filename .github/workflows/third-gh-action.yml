@@ -39,8 +39,8 @@ jobs:
           import os
           print(os.getenv('WORKFLOW_NAME'), os.getenv('WORKFLOW_TYPE'), os.getenv('WORKFLOW_JOB_NAME'))
         shell: python
-#      - name: print all env variables
-#        run: env
+      #      - name: print all env variables
+      #        run: env
       - name: print shell
         run: |
           echo "SHELL: $SHELL"
@@ -49,3 +49,8 @@ jobs:
           echo only first 2 will work should have worked for us...
           echo "F_SECRET: ${{ env.F_SECRET }}"
           echo "secret $F_SECRET"
+      - name: use python shell
+        shell: python
+        run: |
+          import os
+          print(os.getenv('F_SECRET'))
