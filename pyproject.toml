@@ -24,3 +24,5 @@ build-backend = "poetry.core.masonry.api"
 [tool.pylint]
 indent-string = "  "
 
+[tool.pytest.ini_options]
+fixture_loop_scope = "setup"
