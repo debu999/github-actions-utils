@@ -44,7 +44,7 @@ jobs:
   job-conditional-success:
     if: success()
     needs:
-      - job-conditional-failure
+      - steps-conditional
     runs-on: macos-latest
     steps:
       - name: run on steps-conditional/job-conditional-failure success
@@ -54,7 +54,7 @@ jobs:
   job-conditional-always:
     if: always()
     needs:
-      - job-conditional-success
+      - steps-conditional
     runs-on: macos-latest
     steps:
       - name: run on steps-conditional/job-conditional-failure/job-conditional-success always
