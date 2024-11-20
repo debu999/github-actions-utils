@@ -19,4 +19,7 @@ jobs:
       WORKFLOW_JOB_NAME: env-vars
     steps:
       - name: print ENV VARS
-        run: echo $WORKFLOW_NAME, $WORKFLOW_TYPE, $WORKFLOW_JOB_NAME
+        run: |
+          import os
+          print(os.getenv('WORKFLOW_NAME'), os.getenv('WORKFLOW_TYPE'), os.getenv('WORKFLOW_JOB_NAME'))
+        shell: python
