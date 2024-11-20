@@ -13,7 +13,7 @@ on:
 #cancelled() - Returns true when the workflow was cancelled.
 
 jobs:
-  test-conditional:
+  steps-conditional:
     runs-on: macos-latest
     env:
       SUCCESS: voila
@@ -30,4 +30,37 @@ jobs:
       - name: step run on failure
         if: failure() && steps.success_step.outcome == 'failure'
         run: |
-          echo ${{ steps.success_step.conclusion }}
+          echo success step failed ${{ steps.success_step.conclusion }}
+  job-conditional-failure:
+    if: failure()
+    needs:
+      - steps-conditional
+    runs-on: macos-latest
+    steps:
+      - name: run on steps-conditional failure
+        id: success_step
+        run: |
+          echo "run on steps-conditional failure"
+  job-conditional-success:
+    if: success()
+    needs:
+      - steps-conditional
+      - job-conditional-failure
+    runs-on: macos-latest
+    steps:
+      - name: run on steps-conditional/job-conditional-failure success
+        id: success_step
+        run: |
+          echo "run on steps-conditional/job-conditional-failure success"
+  job-conditional-always:
+    if: always()
+    needs:
+      - steps-conditional
+      - job-conditional-failure
+      - job-conditional-success
+    runs-on: macos-latest
+    steps:
+      - name: run on steps-conditional/job-conditional-failure/job-conditional-success always
+        id: success_step
+        run: |
+          echo "run on steps-conditional/job-conditional-failure/job-conditional-success always"
