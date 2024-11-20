@@ -1,0 +1,33 @@
+name: conditional-workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+
+#failure() - Returns true when any previous step failed.
+#success() - Returns true when all previous steps succeeded.
+#always() - Returns true for all steps.
+#cancelled() - Returns true when the workflow was cancelled.
+
+jobs:
+  test-conditional:
+    runs-on: macos-latest
+    env:
+      SUCCESS: voila
+      FAILURE: huh
+    steps:
+      - name: success step
+        id: success_step
+        run: |
+          if [ "$SUCCESS" == "voila" ]; then
+            exit -1
+          else
+            exit 0
+          fi
+      - name: step run on failure
+        if: failure() && steps.success_step.outcome == 'failure'
+        run: |
+          echo {{ steps.success_step.conclusion }}
