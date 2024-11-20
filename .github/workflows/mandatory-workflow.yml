@@ -6,6 +6,7 @@ on:
         description: 'The name of the artifact to download'
         required: true
         default: 'workspace-folder'
+        type: string
 jobs:
   initialization-job:
     runs-on: ubuntu-latest
