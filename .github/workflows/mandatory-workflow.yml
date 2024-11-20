@@ -1,0 +1,11 @@
+name: initialization-workflow
+on: workflow_call
+jobs:
+  initialization-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initialization step
+        run: echo "Initialization step"
+      - name: Initialization completion step
+        run: echo "Initialization completion step"
+

@@ -115,3 +115,5 @@ jobs:
       - name: Publish job output to github output file
         id: publish
         run: find github_actions_utils/*.py -type f -execdir echo '{}' ';' | awk '{print "script-file"NR"="$0}' >> $GITHUB_OUTPUT
+  reuse-workflow:
+    uses: ./.github/workflows/mandatory-workflow.yml
