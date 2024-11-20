@@ -28,8 +28,8 @@ jobs:
       - name: print shell
         run: |
           echo "SHELL: $SHELL"
-          echo "shell: ${{ env.WORKFLOW_NAME }}"
-          echo "shell: ${{ env.WORKFLOW_JOB_NAME }}"
+          echo "workflow name: ${{ env.WORKFLOW_NAME }}"
+          echo "workflow job name: ${{ env.WORKFLOW_JOB_NAME }}"
           echo all should have worked for us...
   env-vars2:
     runs-on: macos-latest
@@ -44,6 +44,6 @@ jobs:
       - name: print shell
         run: |
           echo "SHELL: $SHELL"
-          echo "shell: ${{ env.WORKFLOW_NAME }}"
-          echo "shell: ${{ env.WORKFLOW_JOB_NAME }}"
+          echo "workflow name: ${{ env.WORKFLOW_NAME }}"
+          echo "workflow job name: ${{ env.WORKFLOW_JOB_NAME }}"
           echo only first 2 will work should have worked for us...
