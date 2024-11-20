@@ -42,7 +42,7 @@ jobs:
           print(os.getenv('WORKFLOW_NAME'), os.getenv('WORKFLOW_TYPE'), os.getenv('WORKFLOW_JOB_NAME'))
         shell: python
       - name: print all env variables
-        run: env
+        run: echo ${{ env }}
       - name: print shell
         run: |
           echo "SHELL: $SHELL"
