@@ -32,7 +32,7 @@ jobs:
           echo ${{ secrets.WF_SECRET }}
       - name: Initialization completion step
         run: echo "Initialization completion step"
-      - name:
-          id: set-result
-          run: echo "result=success" >> $GITHUB_OUTPUT
+      - name: set-result
+        id: set-result
+        run: echo "result=success" >> $GITHUB_OUTPUT
 
