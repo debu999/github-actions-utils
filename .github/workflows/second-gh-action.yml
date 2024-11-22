@@ -50,7 +50,8 @@ jobs:
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
           echo "GitHub Context:"
-          echo "${{ github }}" | jq .
+          env | grep GITHUB_
+          echo "${{ github.context }}" | jq .
 
       - uses: actions/cache@v4
         name: Define a cache for the virtual environment based on the dependencies lock file
