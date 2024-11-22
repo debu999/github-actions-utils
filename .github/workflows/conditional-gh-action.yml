@@ -146,6 +146,9 @@ jobs:
           name: artifact-${{ github.run_id }}-${{ matrix.python-version }}-${{ matrix.os-version }}
           path: ./
   reuse-workflow:
+    environment: main
     uses: ./.github/workflows/reuseable-initialization-workflow.yml
     with:
       artifact-name: artifact-${{ github.run_id }}
+    secrets:
+      WF_SECRET: ${{ secrets.REUSE_WF_SECRET }}

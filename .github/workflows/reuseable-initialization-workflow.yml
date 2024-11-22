@@ -7,15 +7,18 @@ on:
         required: true
         default: 'workspace-folder'
         type: string
+    secrets:
+      WF_SECRET: ${{ secrets.WF_SECRET }}
+      required: true
 jobs:
   initialization-job:
     runs-on: ubuntu-latest
-
     steps:
       - name: Initialization step
         run: |
           echo "Initialization step"
           echo ${{ inputs.artifact-name }}
+          echo ${{ secrets.WF_SECRET }}
       - name: Initialization completion step
         run: echo "Initialization completion step"
 
