@@ -8,8 +8,8 @@ on:
         default: 'workspace-folder'
         type: string
     secrets:
-      WF_SECRET: ${{ secrets.WF_SECRET }}
-      required: true
+      WF_SECRET:
+        required: true
 jobs:
   initialization-job:
     runs-on: ubuntu-latest
