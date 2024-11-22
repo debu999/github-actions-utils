@@ -122,6 +122,6 @@ jobs:
           name: artifact-${{ github.run_id }}
           path: ./
   reuse-workflow:
-    uses: ./reuseable-initialization-workflow.yml
+    uses: ./.github/workflows/reuseable-initialization-workflow.yml
     with:
       artifact-name: artifact-${{ github.run_id }}
