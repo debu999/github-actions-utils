@@ -152,3 +152,9 @@ jobs:
       env-name: main
     secrets:
       WF_SECRET: ${{ secrets.REUSE_WF_SECRET }}
+  fetch-output:
+    needs: reuse-workflow
+    runs-on: macos-latest
+    steps:
+      - name: print the output from reuseable-initialization-workflow
+        run: echo ${{ needs.reuse-workflow.outputs.result }}

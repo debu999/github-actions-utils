@@ -14,10 +14,16 @@ on:
     secrets:
       WF_SECRET:
         required: true
+    outputs:
+      result:
+        description: 'The result of the initialization'
+        value: ${{ jobs.initialization-job.outputs.outcome }}
 jobs:
   initialization-job:
     environment: ${{ inputs.env-name }}
     runs-on: ubuntu-latest
+    outputs:
+      outcome: ${{ steps.set-result.outputs.result }}
     steps:
       - name: Initialization step
         run: |
@@ -26,4 +32,7 @@ jobs:
           echo ${{ secrets.WF_SECRET }}
       - name: Initialization completion step
         run: echo "Initialization completion step"
+      - name:
+          id: set-result
+          run: echo "result=success" >> $GITHUB_OUTPUT
 
