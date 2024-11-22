@@ -12,6 +12,7 @@ on:
         required: true
 jobs:
   initialization-job:
+    environment: main
     runs-on: ubuntu-latest
     steps:
       - name: Initialization step
