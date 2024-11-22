@@ -78,12 +78,30 @@ jobs:
       script-file1: ${{ steps.publish.outputs.script-file1 }}
       script-file2: ${{ steps.publish.outputs.script-file2 }}
     steps: # Runs a single command using the runners shell
-      - name: get github context
+      - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          echo "GitHub Context:"
-          echo "$GITHUB_CONTEXT"
+        run: echo GITHUB_CONTEXT - "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo JOB_CONTEXT - "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo STEPS_CONTEXT - "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo RUNNER_CONTEXT - "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo STRATEGY_CONTEXT - "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo MATRIX_CONTEXT - "$MATRIX_CONTEXT"
       - name: checkout code
         uses: actions/checkout@v4
 
