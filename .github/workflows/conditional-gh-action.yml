@@ -149,5 +149,6 @@ jobs:
     uses: ./.github/workflows/reuseable-initialization-workflow.yml
     with:
       artifact-name: artifact-${{ github.run_id }}
+      env-name: main
     secrets:
       WF_SECRET: ${{ secrets.REUSE_WF_SECRET }}

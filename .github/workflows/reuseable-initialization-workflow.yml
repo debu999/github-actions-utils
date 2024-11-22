@@ -7,12 +7,16 @@ on:
         required: true
         default: 'workspace-folder'
         type: string
+      env-name:
+        description: 'The name of the environment to run'
+        required: true
+        type: string
     secrets:
       WF_SECRET:
         required: true
 jobs:
   initialization-job:
-    environment: main
+    environment: ${{ inputs.env-name }}
     runs-on: ubuntu-latest
     steps:
       - name: Initialization step
