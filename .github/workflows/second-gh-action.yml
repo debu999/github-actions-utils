@@ -49,7 +49,8 @@ jobs:
         run: |
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
-          echo ${{ toJSON(github) }}
+          echo "GitHub Context:"
+          echo "${{ github }}"
 
       - uses: actions/cache@v4
         name: Define a cache for the virtual environment based on the dependencies lock file
