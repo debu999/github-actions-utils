@@ -9,11 +9,10 @@ calculator operations and book queries.
 from typing import List
 
 import strawberry
-from flask import Flask
 from strawberry import Schema
-from strawberry.flask.views import GraphQLView
 
-app = Flask(__name__)
+from .messaging_consumer import Subscription
+
 
 # pylint: disable=R0903
 @strawberry.type
@@ -87,12 +86,4 @@ class Query:
 
 
 # Schema
-schema = Schema(query=Query)
-
-# GraphQL View
-app.add_url_rule('/graphql',
-                 view_func=GraphQLView.as_view('graphql', schema=schema,
-                                               graphiql=True))
-
-if __name__ == '__main__':
-  app.run(debug=True)
+schema = Schema(query=Query, subscription=Subscription)

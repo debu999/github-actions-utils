@@ -9,13 +9,15 @@ license = "Apache License Version 2.0"
 
 [tool.poetry.dependencies]
 python = "^3.13"
-flask = "^3.1.0"
-strawberry-graphql = {extras = ["debug-server"], version = "^0.248.1"}
+strawberry-graphql = {extras = ["debug-server", "fastapi"], version = "^0.252.0"}
+confluent-kafka = "2.6.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
 pytest-asyncio = "^0.24.0"
 pylint = "^3.3.1"
+testcontainers = "^4.8.2"
+redpanda = "^0.6.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -26,3 +28,4 @@ indent-string = "  "
 
 [tool.pytest.ini_options]
 fixture_loop_scope = "setup"
+asyncio_default_fixture_loop_scope = "function"
