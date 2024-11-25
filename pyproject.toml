@@ -34,5 +34,4 @@ indent-string = "  "
 output-format = "colorized"
 
 [tool.pytest.ini_options]
-fixture_loop_scope = "setup"
 asyncio_default_fixture_loop_scope = "function"
