@@ -25,7 +25,7 @@ from testcontainers.kafka import RedpandaContainer
 from github_actions_utils.messaging_producer import delivery_report
 
 os.environ["RYUK_CONTAINER_IMAGE"] = "testcontainers/ryuk:0.9.0"
-
+os.environ["APP_ENV"] = "unittest"
 
 @pytest.fixture(scope="session", name="kafka_broker")
 def kafka_container():
