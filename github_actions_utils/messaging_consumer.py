@@ -6,12 +6,12 @@ from typing import AsyncGenerator
 import strawberry
 from confluent_kafka import Consumer
 from strawberry.scalars import JSON
-
+from configuration import CONFIG
 consumer = Consumer(
     {'bootstrap.servers': 'localhost:19092,localhost:29092,localhost:39092',
      'group.id': 'doogle-consumer-group', 'auto.offset.reset': 'earliest'})
-TOPIC_NAME = "orders"
-consumer.subscribe([TOPIC_NAME])
+
+consumer.subscribe([CONFIG.topic])
 
 
 # Define a GraphQL subscription that listens to the Kafka consumer
@@ -37,7 +37,7 @@ class Subscription:
     """
     # Listen to the Kafka consumer and yield messages
     while True:
-      msg = consumer.poll(1.0)
+      msg = consumer.poll(CONFIG.message_timeout)
       if msg is None:
         continue
       if msg.error():

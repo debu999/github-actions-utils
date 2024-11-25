@@ -1,0 +1,12 @@
+defaults:
+  - _self_
+  - ${oc.env:APP_ENV,dev}
+
+hydra:
+  output_subdir: null
+
+topic: orders
+bootstrap_servers: localhost:19092,localhost:29092,localhost:39092
+producer_poll_rate: 0
+publish_count: 4
+message_timeout: 1.0

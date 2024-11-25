@@ -11,6 +11,11 @@ license = "Apache License Version 2.0"
 python = "^3.13"
 strawberry-graphql = {extras = ["debug-server", "fastapi"], version = "^0.252.0"}
 confluent-kafka = "2.6.1"
+pydantic = "^2.10.1"
+pydantic-settings = "^2.6.1"
+python-dotenv = "^1.0.1"
+colorama = "^0.4.6"
+hydra-core = "^1.3.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
@@ -18,6 +23,7 @@ pytest-asyncio = "^0.24.0"
 pylint = "^3.3.1"
 testcontainers = "^4.8.2"
 redpanda = "^0.6.0"
+coverage = "^7.6.8"
 
 [build-system]
 requires = ["poetry-core"]
@@ -25,6 +31,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pylint]
 indent-string = "  "
+output-format = "colorized"
 
 [tool.pytest.ini_options]
 fixture_loop_scope = "setup"
