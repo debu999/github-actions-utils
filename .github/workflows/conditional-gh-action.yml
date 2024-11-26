@@ -78,6 +78,9 @@ jobs:
           - os-version: [ windows-latest, macos-latest ]
     #            Both mac os and windows os pipeline failed with testcontainers
     runs-on: ${{ matrix.os-version }}
+    env:
+      APP_ENV: "development"
+      RYUK_CONTAINER_IMAGE: "testcontainers/ryuk:0.9.0"
     outputs:
       script-file1: ${{ steps.publish.outputs.script-file1 }}
       script-file2: ${{ steps.publish.outputs.script-file2 }}
