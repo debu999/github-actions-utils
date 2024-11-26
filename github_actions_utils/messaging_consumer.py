@@ -8,7 +8,7 @@ from confluent_kafka import Consumer
 from strawberry.scalars import JSON
 from configuration import CONFIG
 consumer = Consumer(
-    {'bootstrap.servers': 'localhost:19092,localhost:29092,localhost:39092',
+    {'bootstrap.servers': CONFIG.bootstrap_servers,
      'group.id': 'doogle-consumer-group', 'auto.offset.reset': 'earliest'})
 
 consumer.subscribe([CONFIG.topic])
