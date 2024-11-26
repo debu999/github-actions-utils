@@ -10,6 +10,8 @@ jobs:
   mongodb-graphql-test:
     environment: main
     runs-on: ubuntu-latest
+    container:
+      image: python:3.13-bookworm
     env:
       APP_ENV: ${{ secrets.APP_ENV }}
       RYUK_CONTAINER_IMAGE: ${{ secrets.RYUK_CONTAINER_IMAGE }}
