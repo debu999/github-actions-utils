@@ -29,7 +29,7 @@ jobs:
           DEBIAN_FRONTEND=noninteractive apt-get -yq install pipx
           pipx ensurepath
           pipx install --python=/usr/local/bin/python poetry
-          export PATH=/usr/local/bin:$PATH
+          export PATH=/usr/local/bin:/github/home/.local/bin:$PATH
           which poetry
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
