@@ -73,6 +73,7 @@ jobs:
         exclude:
           - python-version: "3.12"
             os-version: [ ubuntu-latest, macos-latest, windows-latest ]
+          - os-version: [windows-latest, macos-latest]
     runs-on: ${{ matrix.os-version }}
     outputs:
       script-file1: ${{ steps.publish.outputs.script-file1 }}
