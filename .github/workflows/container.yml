@@ -21,10 +21,6 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v4
-      - name: install python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.13
       - name: Install poetry
         uses: abatilo/actions-poetry@v3
       - name: Setup a local virtual environment (if no poetry.toml file)
