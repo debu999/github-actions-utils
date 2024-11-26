@@ -1,4 +1,4 @@
-name: conditional-workflow
+name: container-workflow
 
 on:
   push:
