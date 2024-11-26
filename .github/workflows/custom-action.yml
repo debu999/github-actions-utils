@@ -52,10 +52,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Load & Cache dependencies
+        id: lnc_dependencies
         uses: ./.github/actions/cached-code
 
       - name: Output Information
-        run: echo "cache used ?? - ${{ steps.lnc_dependencies.outputs.cache-hit }}"
+        run: echo "cache used ?? - ${{ steps.lnc_dependencies.outputs.used-cache }}"
 
       - name: Analysing the code with pylint
         run: |
@@ -100,7 +101,7 @@ jobs:
           caching: 'false'
 
       - name: Output Information
-        run: echo "cache used ?? - ${{ steps.lnc_dependencies.outputs.cache-hit }}"
+        run: echo "cache used ?? - ${{ steps.lnc_dependencies.outputs.used-cache }}"
 
       - name: Download folder artifact
         uses: actions/download-artifact@v4
