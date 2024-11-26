@@ -92,6 +92,8 @@ jobs:
 
       - name: Load & Cache dependencies
         uses: ./.github/actions/cached-code
+        with:
+          caching: 'false'
 
       - name: Download folder artifact
         uses: actions/download-artifact@v4
