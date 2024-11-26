@@ -27,6 +27,7 @@ jobs:
           DEBIAN_FRONTEND=noninteractive apt-get -yq install pipx
           pipx ensurepath
           pipx install poetry
+          which poetry
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
       - uses: actions/cache@v4
