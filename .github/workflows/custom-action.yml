@@ -1,17 +1,39 @@
+# This is a basic workflow to help you get started with Actions
 name: custom-action-workflow
 
-on:
+# Controls when the workflow will run
+on: # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches:
       - main
+  #    paths-ignore:
+  #      - '.github/workflows/**'
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+      - closed
+      - assigned
+    branches:
+      - main
+  # pull_request:
+  #   branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  mongodb-graphql-test:
+  test-lint:
+    #    runs-on: macos-latest no docker in macos-latest
     environment: main
     runs-on: ubuntu-latest
-    #    container:
-    #      image: python:3.13-bookworm
+    outputs:
+      script-file1: ${{ steps.publish.outputs.script-file1 }}
+      script-file2: ${{ steps.publish.outputs.script-file2 }}
     env:
       APP_ENV: ${{ secrets.APP_ENV }}
       RYUK_CONTAINER_IMAGE: ${{ secrets.RYUK_CONTAINER_IMAGE }}
@@ -26,33 +48,107 @@ jobs:
         env:
           MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGODB_USER }}
           MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGODB_CREDS }}
-    steps:
+    steps: # Runs a single command using the runners shell
       - name: checkout code
         uses: actions/checkout@v4
+
       - name: install python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.13
+          python-version: '3.13'
+
       - name: Install poetry
         uses: abatilo/actions-poetry@v3
+
       - name: Setup a local virtual environment (if no poetry.toml file)
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
+          echo "GitHub Context:"
+          echo "$GITHUB_CONTEXT"
+
+
       - uses: actions/cache@v4
-        id: venv_cache
         name: Define a cache for the virtual environment based on the dependencies lock file
         with:
           path: ./.venv
           key: ${{ runner.os }}-poetry-venv-${{ hashFiles('poetry.lock') }}
+
       - name: Install the project dependencies
-        if: steps.venv_cache.outputs.cache-hit != 'true'
         run: poetry install
+
+      - name: Analysing the code with pylint
+        run: |
+          poetry run pylint $(git ls-files '*.py')
+
       - name: start redpanda
         uses: redpanda-data/github-action@v0.1.4
         with:
           version: "latest"
-      - name: Analysing the code with pylint
-        run: poetry run pylint $(git ls-files '*.py')
-      - name: Run the automated tests
+
+      - name: Run the automated tests (for example)
         run: poetry run pytest -v -s
+
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+
+      # Runs good by print
+      - name: Run a multi-line script
+        run: |
+          echo time to bid adieu
+          echo "$(date) - time up...".
+
+      - name: Upload workspace folder artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-${{ github.run_id }}
+          path: ./
+
+      - name: Publish job output to github output file
+        id: publish
+        run: find github_actions_utils/*.py -type f -execdir echo '{}' ';' | awk '{print "script-file"NR"="$0}' >> $GITHUB_OUTPUT
+  deploy:
+    runs-on: macos-latest
+    needs: test-lint
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: install python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v3
+
+      - name: Setup a local virtual environment (if no poetry.toml file)
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+
+      - uses: actions/cache@v4
+        name: Define a cache for the virtual environment based on the dependencies lock file
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-poetry-venv-${{ hashFiles('poetry.lock') }}
+
+      - name: Install the project dependencies
+        run: poetry install
+
+      - name: Download folder artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact-${{ github.run_id }}
+          path: ./artifact-${{ github.run_id }}
+
+      - name: Print the folder
+        run: |
+          echo "Previous job's folder: $GITHUB_WORKSPACE"
+          ls -lRta
+
+      - name: Output py files
+        run: |
+          echo "${{ needs.test-lint.outputs.script-file1 }}"
+          echo "${{ needs.test-lint.outputs.script-file2 }}"
