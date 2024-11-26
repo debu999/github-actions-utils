@@ -5,8 +5,7 @@ as well as querying book information.
 """
 import pytest
 
-from github_actions_utils.calculator import \
-  schema  # Adjust the import based on your project structure
+from main import schema
 
 
 # Test for synchronous query execution

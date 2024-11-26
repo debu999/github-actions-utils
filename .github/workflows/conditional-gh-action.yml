@@ -78,9 +78,13 @@ jobs:
           - os-version: [ windows-latest, macos-latest ]
     #            Both mac os and windows os pipeline failed with testcontainers
     runs-on: ${{ matrix.os-version }}
+    environment: main
     env:
-      APP_ENV: "unittest"
-      RYUK_CONTAINER_IMAGE: "testcontainers/ryuk:0.9.0"
+      APP_ENV: ${{ secrets.APP_ENV }}
+      RYUK_CONTAINER_IMAGE: ${{ secrets.RYUK_CONTAINER_IMAGE }}
+      MONGODB_USER: ${{ secrets.MONGODB_USER }}
+      MONGODB_CREDS: ${{ secrets.MONGODB_CREDS }}
+      MONGODB_CLUSTER: ${{ secrets.MONGODB_CLUSTER }}
     outputs:
       script-file1: ${{ steps.publish.outputs.script-file1 }}
       script-file2: ${{ steps.publish.outputs.script-file2 }}
@@ -148,7 +152,7 @@ jobs:
           poetry run pylint $(git ls-files '*.py')
 
       - name: Run the automated tests (for example)
-        run: poetry run pytest -v
+        run: poetry run pytest -v -s
 
       - name: Publish job output to github output file
         id: publish

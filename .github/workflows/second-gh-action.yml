@@ -69,7 +69,7 @@ jobs:
           poetry run pylint $(git ls-files '*.py')
 
       - name: Run the automated tests (for example)
-        run: poetry run pytest -v
+        run: poetry run pytest -v -s
       
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 

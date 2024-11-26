@@ -9,9 +9,6 @@ calculator operations and book queries.
 from typing import List
 
 import strawberry
-from strawberry import Schema
-
-from .messaging_consumer import Subscription
 
 
 # pylint: disable=R0903
@@ -58,7 +55,7 @@ def resolve_divide(a, b):
 
 # Query
 @strawberry.type
-class Query:
+class CalculatorQuery:
   """A class representing a query that returns a list of books."""
   books: List[Book] = strawberry.field(resolver=get_books)
 
@@ -83,7 +80,3 @@ class Query:
     if b == 0:
       raise ValueError("Cannot divide by zero!")
     return a / b
-
-
-# Schema
-schema = Schema(query=Query, subscription=Subscription)
