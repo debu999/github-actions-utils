@@ -1,9 +1,8 @@
 name: conditional-workflow
 
-on:
-#  push:
-#    branches:
-#      - main
+on: #  push:
+  #    branches:
+  #      - main
   workflow_dispatch:
 
 
@@ -85,6 +84,14 @@ jobs:
       MONGODB_USER: ${{ secrets.MONGODB_USER }}
       MONGODB_CREDS: ${{ secrets.MONGODB_CREDS }}
       MONGODB_CLUSTER: ${{ secrets.MONGODB_CLUSTER }}
+    services:
+      mongodb:
+        image: mongo:8.0.3
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGODB_USER }}
+          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGODB_CREDS }}
     outputs:
       script-file1: ${{ steps.publish.outputs.script-file1 }}
       script-file2: ${{ steps.publish.outputs.script-file2 }}
