@@ -25,10 +25,12 @@ jobs:
         run: |
           python --version
           which python
+          export PYTHON=/usr/local/bin/python
           DEBIAN_FRONTEND=noninteractive apt-get -yq update
           DEBIAN_FRONTEND=noninteractive apt-get -yq install pipx
+          pipx install poetry
+          echo poetry installed successfully
           pipx ensurepath
-          pipx install --python=/usr/local/bin/python poetry
           export PATH=/usr/local/bin:/github/home/.local/bin:$PATH
           which poetry
           poetry config virtualenvs.create true --local
