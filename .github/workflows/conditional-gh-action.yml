@@ -67,9 +67,9 @@ jobs:
       matrix: # Run the job with different versions of Python
         python-version: [ "3.12", "3.13" ]
         os-version: [ ubuntu-latest, macos-latest, windows-latest ]
-#        include:
-#          - python-version: "3.9"
-#            os-version: ubuntu-latest
+        #        include:
+        #          - python-version: "3.9"
+        #            os-version: ubuntu-latest
         exclude:
           - python-version: "3.12"
             os-version: [ ubuntu-latest, macos-latest, windows-latest ]
@@ -82,6 +82,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo GITHUB_CONTEXT - "$GITHUB_CONTEXT"
+      - name: docker information
+        run: |
+          docker version
+          ps -ef
       - name: Dump job context
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
