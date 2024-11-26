@@ -28,8 +28,9 @@ jobs:
           DEBIAN_FRONTEND=noninteractive apt-get -yq update
           DEBIAN_FRONTEND=noninteractive apt-get -yq install pipx
           pipx ensurepath
-          pipx install poetry
-          where poetry
+          pipx install --python=/usr/local/bin/python poetry
+          export PATH=/usr/local/bin:$PATH
+          which poetry
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
       - uses: actions/cache@v4
