@@ -6,6 +6,10 @@ inputs:
     description: 'Weather to cache the dependencies or not'
     required: false
     default: 'true'
+outputs:
+  used-cache:
+    description: 'Weather the cache was used or not to install dependencies'
+    value: ${{ steps.install.outputs.cache }}
 runs:
   using: composite
   steps:
@@ -27,6 +31,7 @@ runs:
         echo "GitHub Context:"
         echo "$GITHUB_CONTEXT"
     - uses: actions/cache@v4
+      id: venv_cache
       name: Define a cache for the virtual environment based on the dependencies lock file
       if: inputs.caching == 'true'
       with:
@@ -34,4 +39,7 @@ runs:
         key: ${{ runner.os }}-poetry-venv-${{ hashFiles('poetry.lock') }}
     - name: Install the project dependencies
       shell: bash
-      run: poetry install
+      id: install
+      run: |
+        poetry install
+        echo "cache=${{inputs.caching}}" >> $GITHUB_OUTPUT
