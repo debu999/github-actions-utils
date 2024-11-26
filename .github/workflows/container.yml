@@ -43,13 +43,18 @@ jobs:
           key: ${{ runner.os }}-poetry-venv-${{ hashFiles('poetry.lock') }}
       - name: Install the project dependencies
         if: steps.venv_cache.outputs.cache-hit != 'true'
-        run: poetry install
+        run: |
+          PATH=/github/home/.local/bin:$PATH
+          poetry install
       - name: start redpanda
         uses: redpanda-data/github-action@v0.1.4
         with:
           version: "latest"
       - name: Analysing the code with pylint
         run: |
+          PATH=/github/home/.local/bin:$PATH
           poetry run pylint $(git ls-files '*.py')
       - name: Run the automated tests
-        run: poetry run pytest -v -s
+        run: |
+          PATH=/github/home/.local/bin:$PATH 
+          poetry run pytest -v -s
