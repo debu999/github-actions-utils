@@ -1,0 +1,58 @@
+name: custom-action-workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  mongodb-graphql-test:
+    environment: main
+    runs-on: ubuntu-latest
+    #    container:
+    #      image: python:3.13-bookworm
+    env:
+      APP_ENV: ${{ secrets.APP_ENV }}
+      RYUK_CONTAINER_IMAGE: ${{ secrets.RYUK_CONTAINER_IMAGE }}
+      MONGODB_USER: ${{ secrets.MONGODB_USER }}
+      MONGODB_CREDS: ${{ secrets.MONGODB_CREDS }}
+      MONGODB_CLUSTER: ${{ secrets.MONGODB_CLUSTER }}
+    services:
+      mongodb:
+        image: mongo:8.0.3
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGODB_USER }}
+          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGODB_CREDS }}
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: install python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v3
+      - name: Setup a local virtual environment (if no poetry.toml file)
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+      - uses: actions/cache@v4
+        id: venv_cache
+        name: Define a cache for the virtual environment based on the dependencies lock file
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-poetry-venv-${{ hashFiles('poetry.lock') }}
+      - name: Install the project dependencies
+        if: steps.venv_cache.outputs.cache-hit != 'true'
+        run: poetry install
+      - name: start redpanda
+        uses: redpanda-data/github-action@v0.1.4
+        with:
+          version: "latest"
+      - name: Analysing the code with pylint
+        run: poetry run pylint $(git ls-files '*.py')
+      - name: Run the automated tests
+        run: poetry run pytest -v -s
