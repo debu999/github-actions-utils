@@ -57,6 +57,7 @@ jobs:
           PATH=/usr/local/bin:/github/home/.local/bin:$PATH
           python --version
           which python
+          git config --global --add safe.directory /__w/github-actions-utils/github-actions-utils
           poetry run pylint $(git ls-files '*.py')
       - name: Run the automated tests
         run: |
