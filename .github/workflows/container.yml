@@ -44,7 +44,9 @@ jobs:
       - name: Install the project dependencies
         if: steps.venv_cache.outputs.cache-hit != 'true'
         run: |
-          PATH=/github/home/.local/bin:$PATH
+          PATH=/usr/local/bin:/github/home/.local/bin:$PATH
+          python --version
+          which python
           poetry install
       - name: start redpanda
         uses: redpanda-data/github-action@v0.1.4
@@ -52,9 +54,13 @@ jobs:
           version: "latest"
       - name: Analysing the code with pylint
         run: |
-          PATH=/github/home/.local/bin:$PATH
+          PATH=/usr/local/bin:/github/home/.local/bin:$PATH
+          python --version
+          which python
           poetry run pylint $(git ls-files '*.py')
       - name: Run the automated tests
         run: |
-          PATH=/github/home/.local/bin:$PATH 
+          PATH=/usr/local/bin:/github/home/.local/bin:$PATH
+          python --version
+          which python
           poetry run pytest -v -s
