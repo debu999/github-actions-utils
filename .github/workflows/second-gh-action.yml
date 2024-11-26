@@ -30,6 +30,7 @@ on: # Triggers the workflow on push or pull request events but only for the "mai
 jobs:
   test-lint:
 #    runs-on: macos-latest no docker in macos-latest
+    environment: main
     runs-on: ubuntu-latest
     outputs:
       script-file1: ${{ steps.publish.outputs.script-file1 }}
