@@ -74,6 +74,7 @@ jobs:
           - python-version: "3.12"
             os-version: [ ubuntu-latest, macos-latest, windows-latest ]
           - os-version: [windows-latest, macos-latest]
+#            Both mac os and windows os pipeline failed with testcontainers
     runs-on: ${{ matrix.os-version }}
     outputs:
       script-file1: ${{ steps.publish.outputs.script-file1 }}
