@@ -27,8 +27,7 @@ on: # Triggers the workflow on push or pull request events but only for the "mai
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test-lint:
-    #    runs-on: macos-latest no docker in macos-latest
+  test-lint: #    runs-on: macos-latest no docker in macos-latest
     environment: main
     runs-on: ubuntu-latest
     outputs:
@@ -52,32 +51,8 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v4
 
-      - name: install python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-
-      - name: Install poetry
-        uses: abatilo/actions-poetry@v3
-
-      - name: Setup a local virtual environment (if no poetry.toml file)
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          poetry config virtualenvs.create true --local
-          poetry config virtualenvs.in-project true --local
-          echo "GitHub Context:"
-          echo "$GITHUB_CONTEXT"
-
-
-      - uses: actions/cache@v4
-        name: Define a cache for the virtual environment based on the dependencies lock file
-        with:
-          path: ./.venv
-          key: ${{ runner.os }}-poetry-venv-${{ hashFiles('poetry.lock') }}
-
-      - name: Install the project dependencies
-        run: poetry install
+      - name: Load & Cache dependencies
+        uses: ./.github/actions/cached-code
 
       - name: Analysing the code with pylint
         run: |
