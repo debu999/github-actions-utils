@@ -10,14 +10,22 @@ jobs:
   mongodb-graphql-test:
     environment: main
     runs-on: ubuntu-latest
-    container:
-      image: python:3.13-bookworm
+#    container:
+#      image: python:3.13-bookworm
     env:
       APP_ENV: ${{ secrets.APP_ENV }}
       RYUK_CONTAINER_IMAGE: ${{ secrets.RYUK_CONTAINER_IMAGE }}
-      MONGODB_USER: ${{ secrets.MONGODB_USER }}
-      MONGODB_CREDS: ${{ secrets.MONGODB_CREDS }}
-      MONGODB_CLUSTER: ${{ secrets.MONGODB_CLUSTER }}
+      MONGODB_USER: root
+      MONGODB_CREDS: example
+      MONGODB_CLUSTER: 127.0.0.1:27017
+    services:
+      mongodb:
+        image: mongo:8.0.3
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
     steps:
       - name: checkout code
         uses: actions/checkout@v4
