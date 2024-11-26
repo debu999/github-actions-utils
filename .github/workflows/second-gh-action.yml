@@ -29,7 +29,8 @@ on: # Triggers the workflow on push or pull request events but only for the "mai
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   test-lint:
-    runs-on: macos-latest
+#    runs-on: macos-latest no docker in macos-latest
+    runs-on: ubuntu-latest
     outputs:
       script-file1: ${{ steps.publish.outputs.script-file1 }}
       script-file2: ${{ steps.publish.outputs.script-file2 }}
