@@ -10,8 +10,8 @@ jobs:
   mongodb-graphql-test:
     environment: main
     runs-on: ubuntu-latest
-#    container:
-#      image: python:3.13-bookworm
+    #    container:
+    #      image: python:3.13-bookworm
     env:
       APP_ENV: ${{ secrets.APP_ENV }}
       RYUK_CONTAINER_IMAGE: ${{ secrets.RYUK_CONTAINER_IMAGE }}
@@ -30,17 +30,9 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v4
       - name: Install poetry
+        uses: abatilo/actions-poetry@v3
+      - name: Setup a local virtual environment (if no poetry.toml file)
         run: |
-          python --version
-          which python
-          export PYTHON=/usr/local/bin/python
-          DEBIAN_FRONTEND=noninteractive apt-get -yq update
-          DEBIAN_FRONTEND=noninteractive apt-get -yq install pipx
-          pipx install poetry
-          echo poetry installed successfully
-          pipx ensurepath
-          export PATH=/usr/local/bin:/github/home/.local/bin:$PATH
-          which poetry
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
       - uses: actions/cache@v4
@@ -51,25 +43,12 @@ jobs:
           key: ${{ runner.os }}-poetry-venv-${{ hashFiles('poetry.lock') }}
       - name: Install the project dependencies
         if: steps.venv_cache.outputs.cache-hit != 'true'
-        run: |
-          PATH=/usr/local/bin:/github/home/.local/bin:$PATH
-          python --version
-          which python
-          poetry install
+        run: poetry install
       - name: start redpanda
         uses: redpanda-data/github-action@v0.1.4
         with:
           version: "latest"
       - name: Analysing the code with pylint
-        run: |
-          PATH=/usr/local/bin:/github/home/.local/bin:$PATH
-          python --version
-          which python
-          git config --global --add safe.directory /__w/github-actions-utils/github-actions-utils
-          poetry run pylint $(git ls-files '*.py')
+        run: poetry run pylint $(git ls-files '*.py')
       - name: Run the automated tests
-        run: |
-          PATH=/usr/local/bin:/github/home/.local/bin:$PATH
-          python --version
-          which python
-          poetry run pytest -v -s
+        run: poetry run pytest -v -s
