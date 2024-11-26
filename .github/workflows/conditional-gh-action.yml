@@ -136,7 +136,10 @@ jobs:
       - name: Install the project dependencies
         if: steps.venv_cache.outputs.cache-hit != 'true'
         run: poetry install
-
+      - name: start redpanda
+        uses: redpanda-data/github-action@v0.1.4
+        with:
+          version: "latest"
       - name: Analysing the code with pylint
         run: |
           poetry run pylint $(git ls-files '*.py')
