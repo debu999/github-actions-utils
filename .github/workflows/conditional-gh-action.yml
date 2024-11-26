@@ -67,12 +67,12 @@ jobs:
       matrix: # Run the job with different versions of Python
         python-version: [ "3.12", "3.13" ]
         os-version: [ ubuntu-latest, macos-latest, windows-latest ]
-        include:
-          - python-version: "3.9"
-            os-version: ubuntu-latest
+#        include:
+#          - python-version: "3.9"
+#            os-version: ubuntu-latest
         exclude:
           - python-version: "3.12"
-            os-version: windows-latest
+            os-version: [ ubuntu-latest, macos-latest, windows-latest ]
     runs-on: ${{ matrix.os-version }}
     outputs:
       script-file1: ${{ steps.publish.outputs.script-file1 }}
