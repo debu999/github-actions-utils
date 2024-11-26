@@ -84,6 +84,11 @@ jobs:
         run: |
           poetry run pylint $(git ls-files '*.py')
 
+      - name: start redpanda
+        uses: redpanda-data/github-action@v0.1.4
+        with:
+          version: "latest"
+
       - name: Run the automated tests (for example)
         run: poetry run pytest -v -s
       
