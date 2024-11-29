@@ -33,7 +33,7 @@ jobs:
         uses: debu999/github-action@v0.1.5_7
         with:
           version: "latest"
-          cluster_mode: 'false'
+          cluster_mode: 'true'
       - name: install python
         uses: actions/setup-python@v5
         with:
