@@ -30,7 +30,7 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v4
       - name: start redpanda
-        uses: debu999/github-action@v0.1.5_3
+        uses: debu999/github-action@v0.1.5_4
         with:
           version: "latest"
           cluster-mode: 'false'
