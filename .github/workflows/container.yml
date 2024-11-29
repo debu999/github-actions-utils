@@ -30,7 +30,7 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v4
       - name: start redpanda
-        uses: debu999/github-action@v0.1.5_1
+        uses: debu999/github-action@v0.1.5_2
         with:
           version: "latest"
       - name: install python
