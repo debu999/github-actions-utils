@@ -32,7 +32,7 @@ jobs:
       - name: start redpanda
         uses: debu999/github-action@v0.1.5_1
         with:
-          version: "latest"
+          version: "v24.2.10"
           cluster_mode: 'true'
       - name: install python
         uses: actions/setup-python@v5

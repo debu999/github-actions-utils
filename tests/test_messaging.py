@@ -114,7 +114,7 @@ def test_consume_message(kafka_broker, shared_data):
   bootstrap_servers = kafka_broker["bootstrap_servers"]
   assert consume_message(bootstrap_servers)["data"] == "1"
   topic, partition, offset = shared_data.get("redpanda")
-  assert consume_message("localhost:39092", topic, offset, partition)[
+  assert consume_message(CONFIG.bootstrap_servers, topic, offset, partition)[
            "data"] == "1"
 
 

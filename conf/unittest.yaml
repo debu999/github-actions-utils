@@ -1,4 +1,4 @@
 # Development configuration
-bootstrap_servers: localhost:29092
+bootstrap_servers: localhost:19092,localhost:29092,localhost:39092
 publish_count: 20
 mongodb_uri: mongodb://${oc.env:MONGODB_USER}:${oc.env:MONGODB_CREDS}@${oc.env:MONGODB_CLUSTER}
